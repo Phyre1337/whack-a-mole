@@ -26,12 +26,12 @@ function init() // Defining a function to reset all values.
     molePick = null;
 
     // Sets all the holes to now be click-able to start tracking clicks.
-    document.getElementById("hole1").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
-    document.getElementById("hole2").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
-    document.getElementById("hole3").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
-    document.getElementById("hole4").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
-    document.getElementById("hole5").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
-    document.getElementById("hole6").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`;
+    document.getElementById("hole1").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
+    document.getElementById("hole2").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
+    document.getElementById("hole3").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
+    document.getElementById("hole4").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
+    document.getElementById("hole5").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
+    document.getElementById("hole6").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`;
 }
 
 function start() // Defining start function.
@@ -46,19 +46,20 @@ function start() // Defining start function.
     countdown = setInterval(ctr, 1000); // Starting timer to count-down the in=game clock.
     document.getElementById("clickToStart").disabled = true; // Disabling the start button until after you're done.
 
+    moleGone = setInterval(moleDecay, 3000); // Starts a timer for the mole dissapearing function.
+
     random(); // Calling the random function to choose a mole for a hole.
 }
 
 function random() // Defining the function to pick a random mole.
 {
-
     if (molePick == null) // If statement to clear out the last hole with a mole in it.
     {
         console.log("First mole being selected.") // First mole hasn't been selected yet.
     }
     else
     {   // If there was a mole in a hole previously, clear it out.
-        molePick.innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')">`; 
+        molePick.innerHTML = `<img src="Images/hole.png" height="250px" width="250px" onClick="clickMole('miss')" draggable="false">`; 
     }
 
     randNum = Math.floor(Math.random() * (MAX - MIN) + MIN); // Generating a random number to pick a mole for which hole.
@@ -71,7 +72,7 @@ function random() // Defining the function to pick a random mole.
     {   // Define the variable of which hole you picked.
         molePick = document.getElementById(`hole${randNum}`);
         // Putting a mole in that hole.
-        molePick.innerHTML = `<img src="Images/mole.png" height="250px" width="250px" onClick="clickMole('hit')">`;
+        molePick.innerHTML = `<img src="Images/mole.png" height="250px" width="250px" onClick="clickMole('hit')" draggable="false">`;
     }
 
     lastNum = randNum; // Setting the number selected to a variable to compare it with the next run of this function.
@@ -81,6 +82,9 @@ function clickMole(userInput) // Function to see whether the player hit or misse
 {
     if (userInput === "hit") // If the player hit a mole...
     {
+        clearInterval(moleGone); // Clears the mole dissapearing interval to reset the timer.
+        moleGone = setInterval(moleDecay, 3000); // Resets the timer back to 3 seconds.
+
         random(); // Call the random function to pick another mole.
         hit++; // Up the hit score by one.
     } 
@@ -88,6 +92,11 @@ function clickMole(userInput) // Function to see whether the player hit or misse
     {
         miss++; // Up the miss score by one.
     }
+}
+
+function moleDecay() // Makes a function to run every 3 seconds to make the mole move to a different hole if the player doesn't click.
+{
+    random(); // Runs random function again to choose another mole.
 }
 
 function ctr() // Defining a function for the in-game timer.
@@ -100,13 +109,14 @@ function ctr() // Defining a function for the in-game timer.
         document.getElementById("clock").innerHTML = 0; // Set it to be zero.
 
         clearInterval(countdown); // Clear the timer interval.
+        clearInterval(moleGone); // Clear the mole dissapearing interval.
 
         document.getElementById("clickToStart").disabled = false; // Make the start button click-able again.
 
         total = hit + miss; // Add the number of hits and misses together to get the total score.
 
         // Display score and ending message.
-        document.getElementById("score").innerHTML = `Your final score was ${hit}/${total}. Click Start to play again.`
+        document.getElementById("score").innerHTML = `Your final score was ${hit}/${total} moles hit. Click Start to play again.`
 
         init(); // Calls init function to reset everything.
     }
