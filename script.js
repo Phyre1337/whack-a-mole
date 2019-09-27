@@ -46,7 +46,7 @@ function start() // Defining start function.
     countdown = setInterval(ctr, 1000); // Starting timer to count-down the in=game clock.
     document.getElementById("clickToStart").disabled = true; // Disabling the start button until after you're done.
 
-    moleGone = setInterval(moleDecay, 3000); // Starts a timer for the mole dissapearing function.
+    moleGone = setInterval(moleDecay, 2000); // Starts a timer for the mole dissapearing function.
 
     random(); // Calling the random function to choose a mole for a hole.
 }
@@ -83,7 +83,7 @@ function clickMole(userInput) // Function to see whether the player hit or misse
     if (userInput === "hit") // If the player hit a mole...
     {
         clearInterval(moleGone); // Clears the mole dissapearing interval to reset the timer.
-        moleGone = setInterval(moleDecay, 3000); // Resets the timer back to 3 seconds.
+        moleGone = setInterval(moleDecay, 2000); // Resets the timer back to 3 seconds.
 
         random(); // Call the random function to pick another mole.
         hit++; // Up the hit score by one.
