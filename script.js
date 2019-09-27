@@ -72,6 +72,7 @@ function random() // Defining the function to pick a random mole.
     else
     {   // Define the variable of which hole you picked.
         molePick = document.getElementById(`hole${randNum}`);
+        
         // Putting a mole in that hole.
         molePick.innerHTML = `<img src="Images/mole.png" height="250px" width="250px" onClick="clickMole('hit')" draggable="false">`;
     }
@@ -89,22 +90,24 @@ function clickMole(userInput) // Function to see whether the player hit or misse
         random(); // Call the random function to pick another mole.
         hit++; // Up the hit score by one.
 
-        document.getElementById("score").innerHTML = "Hit!";
+        document.getElementById("score").innerHTML = "Hit!"; // Displays message saying player hit their click on the mole.
     } 
     else if (userInput === "miss") // If the player misses the mole...
     {
         miss++; // Up the miss score by one.
         
-        document.getElementById("score").innerHTML = "Miss!";
+        document.getElementById("score").innerHTML = "Miss!"; // Displays messages saying player missed their click on the mole.
     }
 }
 
 function moleDecay() // Makes a function to run every 1.5 seconds to make the mole move to a different hole if the player doesn't click.
 {
     random(); // Runs random function again to choose another mole.
-    miss++;
+    
+    miss++; // The mole dissapearing counts as a miss.
 
     document.getElementById("score").innerHTML = "Too slow!";
+    // Displays message saying player is too slow if they don't hit the mole before it dissapears. 
 }
 
 function ctr() // Defining a function for the in-game timer.
@@ -129,6 +132,7 @@ function ctr() // Defining a function for the in-game timer.
 
         init(); // Calls init function to reset everything.
 
+        // Makes sure holes are not clickable until next game is started.
         document.getElementById("hole1").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
         document.getElementById("hole2").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
         document.getElementById("hole3").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
