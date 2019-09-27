@@ -43,6 +43,7 @@ function start() // Defining start function.
     init(); // Making sure all values are set to default.
 
     timer = 30; // Setting the timer value for how many seconds the game should last. 
+    document.getElementById("clock").innerHTML = timer;
     countdown = setInterval(ctr, 1000); // Starting timer to count-down the in=game clock.
     document.getElementById("clickToStart").disabled = true; // Disabling the start button until after you're done.
 
@@ -83,26 +84,34 @@ function clickMole(userInput) // Function to see whether the player hit or misse
     if (userInput === "hit") // If the player hit a mole...
     {
         clearInterval(moleGone); // Clears the mole dissapearing interval to reset the timer.
-        moleGone = setInterval(moleDecay, 750); // Resets the timer back to .75 seconds.
+        moleGone = setInterval(moleDecay, 750); // Resets the timer back to 1.5 seconds.
 
         random(); // Call the random function to pick another mole.
         hit++; // Up the hit score by one.
+
+        document.getElementById("score").innerHTML = "Hit!";
     } 
     else if (userInput === "miss") // If the player misses the mole...
     {
         miss++; // Up the miss score by one.
+        
+        document.getElementById("score").innerHTML = "Miss!";
     }
 }
 
-function moleDecay() // Makes a function to run every .75 seconds to make the mole move to a different hole if the player doesn't click.
+function moleDecay() // Makes a function to run every 1.5 seconds to make the mole move to a different hole if the player doesn't click.
 {
     random(); // Runs random function again to choose another mole.
+    miss++;
+
+    document.getElementById("score").innerHTML = "Too slow!";
 }
 
 function ctr() // Defining a function for the in-game timer.
 {
-    document.getElementById("clock").innerHTML = timer; // Setting the clock display to be the timer.
     timer--; // COunt down by one second.
+    document.getElementById("clock").innerHTML = timer; // Setting the clock display to be the timer.
+    
 
     if (timer === -1) // Once the timer reaches zero, do these things...
     {
@@ -119,5 +128,12 @@ function ctr() // Defining a function for the in-game timer.
         document.getElementById("score").innerHTML = `Your final score was ${hit}/${total} moles hit. Click Start to play again.`
 
         init(); // Calls init function to reset everything.
+
+        document.getElementById("hole1").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
+        document.getElementById("hole2").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
+        document.getElementById("hole3").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
+        document.getElementById("hole4").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
+        document.getElementById("hole5").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
+        document.getElementById("hole6").innerHTML = `<img src="Images/hole.png" height="250px" width="250px" draggable="false">`;
     }
 }
