@@ -1,2 +1,3 @@
 # whack-a-mole
-A whack-a-mole game.
+
+A playable whack-a-mole game available in your web browser! Developed by Christian Torres
